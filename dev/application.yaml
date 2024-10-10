@@ -1,14 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: firstArgoApp
+  name: myapp-argo-application
   namespace: argocd
 spec:
   project: default
+
   source:
-    repoURL: https://github.com/khedetanay/k8s-playground.git
+    repoURL: https://github.com/tanaykhede/k8s-practice.git
     targetRevision: HEAD
-    path: ./
+    path: dev
   destination:
     server: https://kubernetes.default.svc
-    namespace: firstArgoApp
+    namespace: myapp
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
